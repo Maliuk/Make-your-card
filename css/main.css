@@ -1,0 +1,25 @@
+/*================================================
+STYCKY FOOTER
+================================================*/
+body, html {
+  height: 100%; }
+
+#page-wrap {
+  min-height: 100%;
+  margin-bottom: -10px; }
+
+#page-wrap:after {
+  content: "";
+  display: block; }
+
+footer, #page-wrap:after {
+  height: 10px; }
+
+footer {
+  background-color: red; }
+
+/*================================================
+MAIN STYLES
+================================================*/
+
+/*# sourceMappingURL=main.css.map */
