@@ -1,5 +1,5 @@
-class main {
+class Main {
     constructor() {
-        alert('test class');
+        console.log("Test Main class");
     }
 }

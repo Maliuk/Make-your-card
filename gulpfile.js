@@ -15,7 +15,7 @@ var sassOptions = {
 };
 
 gulp.task('styles', function () {
-    return gulp.src('scss/main.scss')
+    return gulp.src('src/scss/*.scss')
     //return gulp.src('resources/assets/scss/styles.scss')
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
@@ -42,16 +42,16 @@ gulp.task('scripts', function () {
 gulp.task("babel", function () {
     return gulp.src(["src/js/classes/*.js", "src/js/app.js"])
         .pipe(sourcemaps.init())
+        .pipe(concat('app.js'))
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(concat('app.js'))
         .pipe(rename({
             suffix: '.min'
         }))
         //.pipe(uglify())
-        //.pipe(sourcemaps.write())
-        .pipe(gulp.dest("dist/js/"))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest("js/"))
         .pipe(notify("Task complete"));
 });
 
@@ -63,7 +63,7 @@ gulp.task('webserver', function() {
 
 //Watch task
 gulp.task('default', ['styles', 'webserver', 'babel'], function () {
-    gulp.watch('scss/**/*.scss', ['styles']);
+    gulp.watch('src/scss/**/*.scss', ['styles']);
     //gulp.watch('resources/assets/js/**/*.js', ['scripts']);
     gulp.watch('src/js/**/*.js', ['babel']);
 });
