@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var babel = require("gulp-babel");
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
@@ -38,6 +39,22 @@ gulp.task('scripts', function () {
         .pipe(notify("Task SCRIPTS complete"));
 });
 
+gulp.task("babel", function () {
+    return gulp.src(["src/js/classes/*.js", "src/js/app.js"])
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(concat('app.js'))
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        //.pipe(uglify())
+        //.pipe(sourcemaps.write())
+        .pipe(gulp.dest("dist/js/"))
+        .pipe(notify("Task complete"));
+});
+
 gulp.task('webserver', function() {
     connect.server({
         port: 5252
@@ -45,7 +62,8 @@ gulp.task('webserver', function() {
 });
 
 //Watch task
-gulp.task('default', ['styles', 'webserver'], function () {
+gulp.task('default', ['styles', 'webserver', 'babel'], function () {
     gulp.watch('scss/**/*.scss', ['styles']);
     //gulp.watch('resources/assets/js/**/*.js', ['scripts']);
+    gulp.watch('src/js/**/*.js', ['babel']);
 });
