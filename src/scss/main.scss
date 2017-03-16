@@ -38,7 +38,7 @@ body {
 
 header {
   position: relative;
-  height: 80px;
+  height: $header-height;
 }
 
 #logo {
@@ -69,27 +69,21 @@ header {
   padding: 0 15px 15px;
   background-color: #fff;
   border-radius: 6px;
+  height: calc(100vh - #{$header-height} - 40px);
 }
 
-
+/*================================================
+IMAGE ITEMS
+================================================*/
 .items {
+  height: calc(100% - 88px);
+
   ul {
     position: relative;
     list-style: none;
     margin: 0;
     font-size: 0;
     padding: 9px 20px;
-    border: 1px solid #d6d6d6;
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      @include size(100% 75px);
-      @include background-image(linear-gradient(to top, rgba(#000000, 0.1) 0%, transparent 100%));
-      z-index: 10;
-    }
 
     li {
       position: relative;
@@ -150,6 +144,43 @@ header {
       }
     }
   }
+}
+
+/*================================================
+SCROLLBAR FIXES
+================================================*/
+.mCSB_container_wrapper>.mCSB_container {
+  padding: 0;
+}
+.mCSB_container_wrapper {
+  border: 1px solid #d6d6d6;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    @include size(100% 75px);
+    @include background-image(linear-gradient(to top, rgba(#000000, 0.1) 0%, transparent 100%));
+    z-index: 10;
+  }
+}
+.mCSB_scrollTools {
+  opacity: 1;
+}
+.mCS-inset-2-dark.mCSB_scrollTools .mCSB_draggerRail, .mCS-inset-2.mCSB_scrollTools .mCSB_draggerRail, .mCS-inset-3-dark.mCSB_scrollTools .mCSB_draggerRail, .mCS-inset-3.mCSB_scrollTools .mCSB_draggerRail, .mCS-inset-dark.mCSB_scrollTools .mCSB_draggerRail, .mCS-inset.mCSB_scrollTools .mCSB_draggerRail {
+  width: 8px;
+  border-radius: 2px;
+}
+.mCS-inset-2-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-inset-3-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-inset-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background-color: #7d7d7d;
+}
+.mCS-inset-2-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-inset-2.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-inset-3-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-inset-3.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-inset-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-inset.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  width: 2px;
+  margin: 3px 7px;
+}
+.mCS-inset-2-dark.mCSB_scrollTools .mCSB_draggerRail {
+  border-color: #e4e4e4;
 }
 
 /*.csstransforms3d .items {

@@ -16,6 +16,12 @@ jQuery(document).ready(function ($) {
                 $(_this).addClass('animate');
             }, i * 50);
         });
+
+
+        $(".scrollbar").mCustomScrollbar({
+            axis:"yx",
+            theme: "inset-2-dark"
+        });
     });
 
     new Main();
