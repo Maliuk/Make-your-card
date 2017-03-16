@@ -12,6 +12,11 @@ body {
   font-family: 'TheMixArab';
 }
 
+p {
+  font-size: 12px;
+  color: #2e3192;
+}
+
 .container {
   max-width: 737px;
   margin: 0 auto;
@@ -195,3 +200,44 @@ SCROLLBAR FIXES
       @include transform(rotateY(0deg));
     }
   }*/
+
+
+/*================================================
+PREVIEW IMAGE
+================================================*/
+#preview {
+  position: relative;
+  @include size(800px auto);
+
+  .pr-body {
+    overflow: hidden;
+    @include size(100% auto);
+    position: relative;
+
+    &::before {
+      //content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+#pr-image {
+  @include size(100% auto);
+}
+
+#pr-text {
+  font-family: sans-serif;
+  font-size: 20px;
+  position: absolute;
+  top: 17%;
+  left: 50%;
+  //border: 1px solid #000;
+  height: 66%;
+  width: 42%;
+  overflow: hidden;
+}

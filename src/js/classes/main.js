@@ -1,5 +1,6 @@
 class Main {
     constructor() {
-        console.log("Test Main class");
+        this.page = 0;
+        this.images = new Array();
     }
 }
