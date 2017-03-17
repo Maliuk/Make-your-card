@@ -8,8 +8,13 @@
 /*================================================
 MAIN STYLES
 ================================================*/
-body {
+
+body, html {
   font-family: 'TheMixArab';
+
+  &, html {
+    overflow: hidden;
+  }
 }
 
 p {
@@ -32,13 +37,79 @@ p {
   padding: 30px 0;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.bg-gray {
+  background-color: #ebebeb;
+}
+
+.line-title {
+  position: relative;
+  color: #b7b7b7;
+  font-weight: normal;
+  font-size: 16px;
+  text-align: center;
+  padding: 12px 0;
+  margin: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid #cccccc;
+  }
+
+  span {
+    position: relative;
+    z-index: 5;
+    display: inline-block;
+    height: 100%;
+    background-color: #ebebeb;
+    min-width: 120px;
+    padding: 0 15px;
+  }
+}
+
+.btn {
+  display: inline-block;
+  color: #fff;
+  border-radius: 6px;
+  background-color: #1885cf;
+  text-decoration: none;
+  padding: 6px 15px;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#47aaf0+0,0979c4+100 */
+  background: #47aaf0; /* Old browsers */
+  background: -moz-linear-gradient(top, #47aaf0 0%, #0979c4 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #47aaf0 0%,#0979c4 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #47aaf0 0%,#0979c4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#47aaf0', endColorstr='#0979c4',GradientType=0 ); /* IE6-9 */
+
+  @include transition(all 0.3s ease);
+
+  &:hover {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0979c4+0,47aaf0+100 */
+    background: #0979c4; /* Old browsers */
+    background: -moz-linear-gradient(top, #0979c4 0%, #47aaf0 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #0979c4 0%,#47aaf0 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #0979c4 0%,#47aaf0 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0979c4', endColorstr='#47aaf0',GradientType=0 ); /* IE6-9 */
+  }
+}
+
 
 #page-wrap {
-  @include size(100%);
+  @include size(auto 100%);
   background-image: url('../img/bg.jpg');
   background-repeat: repeat;
   background-position: center;
   min-height: 100vh;
+  padding: 0 15px;
 }
 
 header {
@@ -113,42 +184,110 @@ IMAGE ITEMS
         display: none;
       }
 
-      .item-frame, .item-image {
-        border: 1px solid #d6d6d6;
-        @include box-sizing(border-box);
-      }
 
-      .item-frame {
-        @include size(110px 90px);
-        margin: 0 auto;
-        padding: 5px;
-        background: #fff;
-        cursor: pointer;
+    }
+  }
+}
 
-        box-shadow: 0px 13px 20px -20px rgba(0, 0, 0, 1);
-        @include transform(rotate(0deg) scale(1));
-        @include transition(all 0.4s $ease-out-back);
+.item-frame, .item-image {
+  border: 1px solid #d6d6d6;
+  @include box-sizing(border-box);
+  overflow: hidden;
+}
 
-        &:hover {
-          @include transform(rotate(-6deg) scale(1.1));
-          box-shadow: -2px 15px 50px -20px rgba(0, 0, 0, 0.4);
-        }
-      }
+.item-frame {
+  @include size(110px 90px);
+  margin: 0 auto;
+  padding: 5px;
+  background: #fff;
+  cursor: pointer;
 
-      .item-image {
-        text-align: center;
-        @include size(100%);
+  box-shadow: 0px 13px 20px -20px rgba(0, 0, 0, 1);
+  @include transform(rotate(0deg) scale(1));
+  @include transition(all 0.4s $ease-out-back);
 
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+  &:hover {
+    @include transform(rotate(-6deg) scale(1.1));
+    box-shadow: -2px 15px 50px -20px rgba(0, 0, 0, 0.4);
+  }
+}
 
-        img {
-          @include size(100% auto);
-        }
+.item-image {
+  text-align: center;
+  @include size(100%);
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  img {
+    @include size(100% auto);
+  }
+}
+
+/*================================================
+EDIT PAGE
+================================================*/
+.edit-page {
+  .item-frame {
+    display: inline-block;
+  }
+
+  p {
+    margin: -20px 0 0 0;
+  }
+
+  .section {
+    margin: 0 -15px;
+    padding: 15px;
+    border-radius: 6px;
+    height: calc(100% - 230px);
+
+    .line-title:first-of-type {
+      margin-top: -15px;
+
+      & + div {
+        padding: 10px 0 25px;
       }
     }
   }
+}
+
+.mini-preview {
+  overflow: visible;
+  padding: 30px 0;
+}
+
+#mini-text .item-image {
+  font-size: 8px;
+}
+
+#mini-result .item-image {
+  canvas {
+    @include size(100%);
+  }
+}
+
+.symb {
+  display: inline-block;
+  position: relative;
+  @include size(80px 90px);
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translate(-50%, -50%));
+  }
+}
+
+#input-text {
+  background-color: #ffffff;
+  max-width: 404px;
+  min-height: 130px;
+  padding: 10px;
+  border-radius: 6px;
+  outline: none !important;
 }
 
 /*================================================
@@ -157,7 +296,7 @@ SCROLLBAR FIXES
 .mCSB_container_wrapper>.mCSB_container {
   padding: 0;
 }
-.mCSB_container_wrapper {
+#page-wrap:not(.edit-page) .mCSB_container_wrapper {
   border: 1px solid #d6d6d6;
 
   &::after {
@@ -188,24 +327,12 @@ SCROLLBAR FIXES
   border-color: #e4e4e4;
 }
 
-/*.csstransforms3d .items {
-  perspective: 800px;
-
-  .item-frame {
-    opacity: 0;
-    @include transform(rotateY(45deg));
-
-    &.animate {
-      opacity: 1;
-      @include transform(rotateY(0deg));
-    }
-  }*/
-
 
 /*================================================
 PREVIEW IMAGE
 ================================================*/
 #preview {
+  //display: none;
   position: relative;
   @include size(800px auto);
 
@@ -240,4 +367,5 @@ PREVIEW IMAGE
   height: 66%;
   width: 42%;
   overflow: hidden;
+  @include transform(rotate(0deg));
 }

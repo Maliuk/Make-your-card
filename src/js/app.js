@@ -1,4 +1,5 @@
 $.noConflict();
+window.$ = jQuery;
 jQuery(document).ready(function ($) {
 
     $('.item-image').each(function () {
@@ -22,39 +23,66 @@ jQuery(document).ready(function ($) {
             axis:"xy",
             theme: "inset-2-dark"
         });
-
-        $('.items .item-frame').click(function (e) {
-            e.preventDefault();
-
-            try {
-                sessionStorage.setItem('test', 'test');
-                window.location = "/edit.html";
-            }
-            catch (ex) {
-                console.log(ex);
-            }
-
-        });
     });
 
 
+    $('.items .item-frame').click(function (e) {
+        e.preventDefault();
 
-    $('body').on("click", function () {
-        return;
-        /*var node = document.getElementById('content');
+        var image = {
+            url: $(this).data('url'),
+            textWidth: $(this).data('text-width'),
+            textHeight: $(this).data('text-height'),
+            top: $(this).data('top'),
+            left: $(this).data('left'),
+            rotate: $(this).data('rotate')
+        };
 
-        node = document.body;
+        try {
+            sessionStorage.setItem('image', JSON.stringify(image));
+            window.location = "/edit.html";
+        }
+        catch (ex) {
+            console.log(ex);
+        }
+    });
 
-        domtoimage.toPng(node)
-            .then(function (dataUrl) {
-                var img = new Image();
-                img.src = dataUrl;
-                document.body.appendChild(img);
-            })
-            .catch(function (error) {
-                console.error('oops, something went wrong!', error);
-            });*/
 
+    (function () {
+        if (window.location.toString().indexOf('edit.html') > -1 && !sessionStorage.getItem('image')) {
+            window.location = "/";
+        }
+
+        if ($("div").is("#preview") && sessionStorage.getItem('image')) {
+            var image = JSON.parse(sessionStorage.getItem('image'));
+            var imgObj = new ImageItem(image.url, image.textWidth, image.textHeight, image.top, image.left, image.rotate);
+            imgObj.appendToDomElement();
+
+            $('#input-text').on("keyup", function () {
+                $('#mini-text .item-image').html($(this).html());
+                imgObj.setText($(this).html());
+
+                html2canvas($("#preview"), {
+                    onrendered: function(canvas) {
+                        document.body.appendChild(canvas);
+                        $('#mini-result .item-image').html(canvas);
+                    }
+                });
+            });
+        }
+    })();
+
+
+
+    var link = document.createElement('a');
+    link.innerHTML = 'download image';
+    link.id = 'download';
+    link.download = "mypainting.png";
+    document.body.appendChild(link);
+
+    $('.btn').on("click", function (e) {
+        e.preventDefault();
+        var _this = this;
 
         if (!$("div").is("#preview"))
             return;
@@ -62,11 +90,14 @@ jQuery(document).ready(function ($) {
             onrendered: function(canvas) {
                 document.body.appendChild(canvas);
 
-                // Convert and download as image
-                //Canvas2Image.saveAsPNG(canvas);
-                //$("#img-out").append(canvas);
-                // Clean up
-                //document.body.removeChild(canvas);
+                link.href = canvas.toDataURL();
+                link.click();
+
+                //var image = canvas.toDataURL('image/jpeg', 0.5);
+                //var image = canvas.toDataURL('image/jpeg', 1.0).replace("image/jpeg", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+                //window.location.href = image; // it will save locally
+
+                //$(_this).href(canvas.toDataURL('image/jpeg', 1.0));
             }
         });
     });
