@@ -10,10 +10,10 @@ class ImageItem {
     }
 
     appendToDomElement() {
-        var html = '<div class="pr-body">' +
+        let html = '<div class="pr-body">' +
                     '<img id="pr-image" src="'+ this.url +'" />' +
                     '<div id="pr-text">' +
-                    'Integer semper ut libero vel aliquet. Cras vel ipsum sed nibh vestibulum lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis in quam dapibus, iaculis libero ac, vestibulum odio. Phasellus fermentum sapien at magna faucibus, ac convallis velit ultricies. Morbi eget enim vel elit cursus ultrices id quis nisl. Cras maximus facilisis venenatis.' +
+                    this.text +
                     '</div>' +
                     '</div>';
         $('#preview').html(html);
@@ -29,8 +29,7 @@ class ImageItem {
             '-o-transform': 'rotate(' + this.rotate + ')',
             'transform': 'rotate(' + this.rotate + ')'
         });
-
-        $('#mini-image .item-image, #mini-result .item-image').css('background-image', 'url("' + this.url + '")');
+        $('#mini-image img, #mini-result img').attr('src', this.url);
     }
 
     setText(text = "") {
@@ -40,5 +39,30 @@ class ImageItem {
 
     getText() {
         return this.text;
+    }
+
+    saveImage() {
+        let link;
+        if (!$('a').is('#download')) {
+            link = document.createElement('a');
+            link.innerHTML = 'download image';
+            link.id = 'download';
+            link.download = "noname.png";
+            document.body.appendChild(link);
+        }
+        else {
+            link = $('a#download').get(0);
+        }
+
+        if (!$("div").is("#preview"))
+            return;
+        html2canvas($("#preview"), {
+            onrendered: function (canvas) {
+                //document.body.appendChild(canvas);
+                //link.href = canvas.toDataURL();
+                $(link).attr('href', canvas.toDataURL());
+                link.click();
+            }
+        });
     }
 }
