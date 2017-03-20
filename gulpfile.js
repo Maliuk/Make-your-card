@@ -11,12 +11,11 @@ var webserver = require('gulp-webserver');
 
 var sassOptions = {
     errLogToConsole: true,
-    //outputStyle: 'compressed'
+    outputStyle: 'compressed'
 };
 
 gulp.task('styles', function () {
     return gulp.src('src/scss/*.scss')
-    //return gulp.src('resources/assets/scss/styles.scss')
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.write())
@@ -35,7 +34,7 @@ gulp.task('scripts', function () {
         .pipe(gulp.dest('./public/js/'))
         .pipe(rename('scripts.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./public/js/'))
+        .pipe(gulp.dest('./js/'))
         .pipe(notify("Task SCRIPTS complete"));
 });
 
@@ -49,7 +48,7 @@ gulp.task("babel", function () {
         .pipe(rename({
             suffix: '.min'
         }))
-        //.pipe(uglify())
+        .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest("js/"))
         .pipe(notify("Task complete"));
