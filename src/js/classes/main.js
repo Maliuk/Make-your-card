@@ -5,7 +5,7 @@ class Main {
         this.windowLoad();
         this.editPageEvents();
         this.saveImage();
-        this.uploadImage();
+        this.shareImage();
 
     }
 
@@ -23,6 +23,8 @@ class Main {
                 axis:"xy",
                 theme: "inset-2-dark"
             });
+
+            $('.preloader').addClass('disable');
         });
 
         $('.items .item-frame').click(function (e) {
@@ -91,9 +93,9 @@ class Main {
                 }
             });
 
-            $('#input-text, #pr-text').css('font-family', $('#select-font').val());
+            $('#input-text, #pr-text, #mini-text').css('font-family', $('#select-font').val());
             $('#select-font').on("change", function () {
-                $('#input-text, #pr-text').css('font-family', $(this).val());
+                $('#input-text, #pr-text, #mini-text').css('font-family', $(this).val());
                 previewUpdate();
             });
 
@@ -105,7 +107,7 @@ class Main {
             var picker = new CP(document.querySelector('input#font-color'));
             picker.on("change", function(color) {
                 this.target.value = '#' + color;
-                $('#input-text, #pr-text').css('color', '#' + color);
+                $('#input-text, #pr-text, #mini-text').css('color', '#' + color);
                 previewUpdate();
             });
 
@@ -135,12 +137,12 @@ class Main {
         }
     }
 
-    uploadImage() {
+    shareImage() {
         let _this = this;
         if (this.image) {
             $('#btn-poster').on("click", function (e) {
                 e.preventDefault();
-                _this.image.upload();
+                _this.image.shareFB();
             });
         }
     }
