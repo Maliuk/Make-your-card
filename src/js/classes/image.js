@@ -11,13 +11,13 @@ class ImageItem {
 
     appendToDomElement() {
         let html = '<div class="pr-body">' +
-                    '<img id="pr-image" src="'+ this.url +'" />' +
-                    '<div id="pr-text">' +
-                    this.text +
-                    '</div>' +
-                    '</div>';
+            '<img id="pr-image" src="' + this.url + '" />' +
+            '<div id="pr-text">' +
+            this.text +
+            '</div>' +
+            '</div>';
         $('#preview').html(html);
-        
+
         $('#pr-text').css({
             'width': this.textW,
             'height': this.textH,
@@ -64,5 +64,40 @@ class ImageItem {
                 link.click();
             }
         });
+    }
+
+    shareFB() {
+
+    }
+
+    upload() {
+        html2canvas($("#preview"), {
+            onrendered: function (canvas) {
+                $.ajax({
+                    type: "POST",
+                    url: "upload.php",
+                    data: {
+                        img: canvas.toDataURL()
+                    }
+                }).done(function (response) {
+                    console.log(response);
+                    FB.ui({
+                        method: 'share',
+                        href: 'http://demo.yoursites.online/' + response,
+                        image: 'http://demo.yoursites.online/' + response
+                    }, function (response) {
+
+                        //TODO Proper response handling
+                        log(response);
+                        if (typeof response != 'undefined') {
+                            alert('Thanks for sharing');
+                        }
+                    });
+                }).error(function (error) {
+                    console.warn(error);
+                });
+            }
+        });
+
     }
 }

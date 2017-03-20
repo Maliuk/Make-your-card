@@ -3,8 +3,9 @@ class Main {
         this.image;
 
         this.windowLoad();
-        this.editPageEvants();
+        this.editPageEvents();
         this.saveImage();
+        this.uploadImage();
 
     }
 
@@ -46,7 +47,7 @@ class Main {
         });
     }
 
-    editPageEvants() {
+    editPageEvents() {
         let timeOutId = null;
 
         let previewUpdate = function () {
@@ -134,5 +135,14 @@ class Main {
         }
     }
 
+    uploadImage() {
+        let _this = this;
+        if (this.image) {
+            $('#btn-poster').on("click", function (e) {
+                e.preventDefault();
+                _this.image.upload();
+            });
+        }
+    }
 
 }
